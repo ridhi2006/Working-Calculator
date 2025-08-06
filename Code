@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<title>Calculator</title>
+<head>
+    <style>
+        body{
+            background-color: lightgray;
+        }
+        .heading{
+            background-color: rgb(42, 180, 180);
+            color: black;
+            height: 30px;
+            padding: 5px;
+            font-size: 28px;
+        }
+        .bl-heading{
+            background-color: white;
+            height: 25px;
+            width: 100%;
+        }
+        .back-div{
+            background-color: white;
+            height: 680px;
+            width: 400px;
+            
+        }
+        .display{
+        
+            width: 360px;
+            height: 40px;
+            margin: 20px 0;
+            font-size: 20px;
+            padding: 10px;
+            text-align: right;
+            border: 1px solid gray;
+            background-color: #f9f9f9;
+        }
+
+        .boxes{
+            background-color: rgb(42, 180, 180);
+            height: 400px;
+            width: 80px;
+            float: left;
+            margin-left:10px;
+            margin-right: 10px;
+        }
+        .inner-boxes{
+            border: solid 1px grey;
+            height: 100px;
+            width: 80px;
+            align-content: center;
+            color: white;
+            background-color:rgb(42, 180, 180);
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+    <body>
+        <center><div class="heading">Calculator</div></center>
+        <div class="bl-heading"></div>
+        <center><div class="back-div">
+            <input type="text " id="display" class="display"  disabled>
+            <div class="boxes">
+                <center><button onclick="appendValue('1')" class="inner-boxes">1</button>
+                <button onclick="appendValue('4')" class="inner-boxes">4</button>
+                <button onclick="appendValue('7')" class="inner-boxes">7</button>
+                <button onclick="appendValue('0')" class="inner-boxes">0</button></center>
+            </div>
+            <div class="boxes">
+                <center><button onclick="appendValue('2')" class="inner-boxes">2</button>
+                <button onclick="appendValue('5')" class="inner-boxes">5</button>
+                <button onclick="appendValue('8')" class="inner-boxes">8</button>
+                <button onclick="appendValue('*')" class="inner-boxes">*</button></center>
+            </div>
+            <div class="boxes">
+                <center><button onclick="appendValue('3')" class="inner-boxes">3</button>
+                <button onclick="appendValue('6')" class="inner-boxes">6</button>
+                <button onclick="appendValue('9')" class="inner-boxes">9</button>
+                <button onclick="calculate()" class="inner-boxes">=</button></center>
+            </div>
+            <div class="boxes">
+                <center><button onclick="appendValue('+')" class="inner-boxes">+</button>
+                <button onclick="appendValue('-')" class="inner-boxes">-</button>
+                <button onclick="appendValue('/')" class="inner-boxes">/</button>
+                <button onclick="clearDisplay()" class="inner-boxes">C</button></center>
+            </div>
+        </div></center>
+        <script>
+            function appendValue(val){
+                document.getElementById("display").value+=val;
+            }
+
+            function clearDisplay(){
+                document.getElementById("display").value="";
+            }
+
+            function calculate(){
+                const expression=document.getElementById("display").value;
+
+                evaluateExpression(expression)
+                .then(result=>{
+                    document.getElementById("display").value=result;
+                })
+                .catch(error=>{
+                    document.getElementById("display").value="Error";
+                });
+            }
+
+            function evaluateExpression(expression){
+                return new Promise((resolve,reject)=>{
+                    try{
+                        const result=eval(expression);
+                        resolve(result);
+                    }
+                    catch(error){
+                        reject(error);
+                    }
+                });
+            }
+        </script>
+    </body>
+</head>
+</html>
